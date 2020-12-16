@@ -38,10 +38,10 @@ namespace midi
             var onStream = midiStream.Where(x => x.EventArgs.MidiEvent.CommandCode == MidiCommandCode.NoteOn)
                 .Select(x => (x, stopWatch.ElapsedMilliseconds));
             var offStream = midiStream.Where(x => x.EventArgs.MidiEvent.CommandCode == MidiCommandCode.NoteOff);
-
             var noteList = new List<NoteData>();
             var list = new List<List<NoteData>>();
 
+            var list1 = noteList;
             onStream.Zip(offStream)
                 .Subscribe(x =>
                 {
@@ -64,7 +64,7 @@ namespace midi
                         Velocity = noe.Velocity
                     };
 
-                    noteList.Add(note);
+                    list1.Add(note);
                 });
             midiIn.Start();
 
